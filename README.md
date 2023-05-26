@@ -33,7 +33,7 @@ vagrant up
 Caso você não queira criar as VM's com o Vagrant,
 você pode cria-las manualmente ou de qualquer outra forma e 
 executar a instalação simplesmente copiando os scripts do [webserver](./webserver.sh)
-e [database](./database.sh) para as suas VM's e executando-os manualmente.
+e [database](./database.sh) para as suas VM's e executando-os.
 
 
 
