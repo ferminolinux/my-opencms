@@ -35,6 +35,10 @@ você pode cria-las manualmente ou de qualquer outra forma e
 executar a instalação simplesmente copiando os scripts do [webserver](./webserver.sh)
 e [database](./database.sh) para as suas VM's e executando-os.
 
+## Atenção
+Esse laboratório foi feito seguindo o fluxo do outro laboratório manual, onde foi realizada toda a instalação  OpenCMS inteira  e só depois com ele já instalado foi configurado feita configuração e utilização do Proxy Reverso. Sendo assim, tente seguir esse fluxo ao executar este script, primeiro faça a instalaçao do OpenCMS normalmente pelo seu endereço padrão e só depois faça o acesso dele através das rotas redirecionadas pelo NGINX.
+
+
 
 
 
