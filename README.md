@@ -24,6 +24,18 @@ As VM's foram implementadas seguindo a tabela a seguir:
 |172.23.1.10|webserver|RHEL/AlmaLinux9|2048|1|
 |172.23.1.20|database|RHEL/AlmaLinux9|512|1|
 
+## Execução
+Para executar utilizando o vagrant, faça o seguinte comando.
+```
+vagrant up 
+```
+
+Caso você não queira criar as VM's com o Vagrant,
+você pode cria-las manualmente ou de qualquer outra forma e 
+executar a instalação simplesmente copiando os scripts do [webserver](./webserver.sh)
+e [database](./database.sh) para as suas VM's e executando-os manualmente.
+
+
 
 
 
