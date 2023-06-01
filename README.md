@@ -67,6 +67,51 @@ a rede, a partir daqui é só repetir o mesmo processo para a segunda VM.
 o  [guia de instalação do AlmaLinux](https://wiki.almalinux.org/documentation/installation-guide.html#installation) presente na documentação oficial.
 
 #### Linux
+Vamos começar definindo os endereços IP's das VM's, o RHEL/AlmaLinux utiliza
+um padrão de configuração de rede onde o sistema armazena perfis para os dispositivos
+de rede. Os perfis são gerados por uma ferramenta chamada NetworkManager e é
+possível altera-los manualmente editando o arquivo de texto dos perfis que se 
+encontram no diretório **/etc/NetworkManager/system-connections**, é possível
+ver a estrutura de um desses arquivos abaixo:
+
+![Imagem 17 - Perfil de rede do NetworkManager](imagens/imp-manual-17.png)
+
+Apesar de ser possível alterar via texto, nós vamos seguir a boa prática de 
+utilizar o **nmcli**, ele é um comando do sistema que nos permite realizar essas 
+configurações de rede consequentemente criando ou editando esses arquivos sem 
+precisar mexer neles diretamente.
+
+Com isso em mente iniciei as configurações:
+
+1. Listei as conexões de rede disponíveis para identificar a conexão conectada
+ao virtualbox.
+![Imagem 18 - Listagem conexões de rede](imagens/imp-manual-18.png)
+
+
+2. Depois de identificar a Wired Connection, alterei o nome dela para **enp0s8**.
+![Imagem 19 - Alterando nome da conexão](imagens/imp-manual-19.png)
+
+3. Agora com um nome mais simples para identificar a conexão, eu realizei
+as modificações a seguir, com os comandos abaixo:
+
+    - Alterei o método de endereçamento para manual
+    - Adicionei o endereço IP correspodente
+    - Adicionei o gateway(que é o endereço do virtualbox dentro da rede).
+    - Adicionei um endereço de servidor dns para resolução de nomes na internet.
+    - Reiniciei a interface, desligando ela e ligando novamente(down e up).
+    ![Imagem 20 - Multiplas alterações na conexão de rede](imagens/imp-manual-20.png)
+
+
+4. Para facilitar a identificação das máquinas vamos alterar o hostname dela,
+para isso vamos utilizar também um utilitário do sistema o **hostnamectl**.
+Para isso executei o comando abaixo e reiniciei a sessão do terminal.
+![Imagem 21 - Alterando o hostname](imagens/imp-manual-21.png)
+
+5. Repita todos os passos anteriores na VM do psql.
+
+
+
+
 
 
 
