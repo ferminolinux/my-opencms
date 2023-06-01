@@ -17,10 +17,10 @@ e tendo o Nginx como proxy reverso.
 ### Implementação manual
 Utilizou-se do [Oracle VM Virtualbox](https://www.virtualbox.org/manual/UserManual.html)
 para a criação das máquinas virtuais na infraestrutura local.
-![Imagem Arquitetura - Demonstrando as VMs e as tecnologias presentes nelas](imagens/imp-manual-arq.png)
 
 #### **Design**
 Foi criada uma rede virtual e duas VM's conectadas a ela, a primeira possuindo a a instalação do OpenCMS e o próprio Nginx e a outra o banco de dados Postgresql.
+![Imagem Arquitetura - Demonstrando as VMs e as tecnologias presentes nelas](imagens/imp-manual-arq.png)
 
 **A rede possui as seguintes características:**
 |tipo| cidr|
