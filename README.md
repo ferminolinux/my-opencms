@@ -1,42 +1,66 @@
 # my-opencms
-    
-Neste projeto eu fiz uma implementação automatizada do OpenCMS utilizando VM's Alma Linux.
 
->:bulb: Para uma implementação manual leia o [guia de implementação manual](./manual_implementation.odt).
+## Descrição 
+Neste projeto foram realizadas algumas implementações do OpenCMS, foram 
+utilizadas diversas abordagens desde a manual até algumas mais sofisticadas como
+o uso de containers Docker, por exemplo.
 
-## Descrição
-Este projeto foi feito, usando um servidor do banco de dados postgresql e outro com o tomcat para a execução do OpenCMS e com o Nginx para ser utilizado como proxyu reverso.
+>:bulb: Caso queira saber mais sobre o OpenCMS você pode encontrar mais detalhes
+[aqui](https://documentation.opencms.org/opencms-documentation/introduction/get-started/)
 
-Para automatizar essa implementação foi desenvolvido dois scripts bash e para simplificar o processo de criação das VMs e a execução deles optou-se pelo uso do Vagrant.
+### Problema
+Realizar a implementação do OpenCMS utilizando um banco de dados PostgreSQL
+e tendo o Nginx como proxy reverso.
 
-## Requisitos
-### **Ferramentas**
-- Principais
-    - Virtualbox
-    - Bash
-    - Vagrant
+## Implementação
 
-### **VM's**
-As VM's foram implementadas seguindo a tabela a seguir:
+### Implementação manual
+Utilizou-se do [Oracle VM Virtualbox](https://www.virtualbox.org/manual/UserManual.html)
+para a criação das máquinas virtuais na infraestrutura local.
 
-|IP|HOSTNAME|SISTEMA OPERACIONAL|MEMÓRIA|CPUS|
-|-|-|-|-|-|
-|172.23.1.10|webserver|RHEL/AlmaLinux9|2048|1|
-|172.23.1.20|database|RHEL/AlmaLinux9|512|1|
+#### **Design**
+Foi criada uma rede virtual e duas VM's conectadas a ela, a primeira possuindo a a instalação do OpenCMS e o próprio Nginx e a outra o banco de dados Postgresql.
 
-## Execução
-Para executar utilizando o vagrant, faça o seguinte comando.
-```
-vagrant up 
-```
+**A rede possui as seguintes características:**
+|tipo| cidr|
+|----|-----------------|
+|host-only|172.23.1.0/24|
 
-Caso você não queira criar as VM's com o Vagrant,
-você pode cria-las manualmente ou de qualquer outra forma e 
-executar a instalação simplesmente copiando os scripts do [webserver](./webserver.sh)
-e [database](./database.sh) para as suas VM's e executando-os.
+**As VM's possuem as seguintes características:**
+| VM | endereço ip | memória | cpus |
+|----|-------------|---------|------|
+|opencms|172.23.1.10|2048|1
+|psql|172.23.1.20|1024|1
 
-## Atenção
-Esse laboratório foi feito seguindo o fluxo do outro laboratório manual, onde foi realizada toda a instalação do OpenCMS e só depois com ele já instalado foi feita a configuração e utilização do Proxy Reverso. Sendo assim, tente seguir esse fluxo ao executar este script, primeiro faça a instalação do OpenCMS normalmente pelo seu endereço padrão e só depois faça o acesso dele através das rotas redirecionadas pelo NGINX.
+#### Virtualbox
+Eu comecei criando a rede que seria responsável por interligar as VM's, 
+seguindo os passos a seguir:
+1. Acessei o VirtualBox:
+![Imagem 1 - Acessando o VirtualBox](imagens/imp-manual-1.png)
+2. Naveguei até as definições de rede:
+![Imagem 2 - Selecionando as definições](imagens/imp-manual-2.png)
+![Imagem 3 - Selecionando as definições de rede](imagens/imp-manual-3.png)
+![Imagem 4 - Definições de rede](imagens/imp-manual-4.png)
+3. Criei a nova rede
+![Imagem 5 - Criando uma nova rede](imagens/imp-manual-5.png)
+4. Alterei o o bloco CIDR padrão dela para o que eu deseja:
+![Imagem 6 - Selecionando a rede](imagens/imp-manual-6.png)
+![Imagem 7 - Alterando o bloco cidr da rede](imagens/imp-manual-7.png)
+5. Criei as VMs adicionando as informações presentes na tabela anterior.
+![Imagem 8 - Selecionando a rede](imagens/imp-manual-8.png)
+![Imagem 9 - Criando nova VM](imagens/imp-manual-9.png)
+![Imagem 10 - Criação 1](imagens/imp-manual-10.png)
+![Imagem 11 - Criação 2](imagens/imp-manual-11.png)
+![Imagem 12 - Criação 3](imagens/imp-manual-12.png)
+
+>:bulb: Agora é só realizar a instalação do Almalinux, ela pode ser feita seguindo
+o  [guia de instalação do AlmaLinux](https://wiki.almalinux.org/documentation/installation-guide.html#installation) presente na documentação oficial.
+
+#### Linux
+
+
+
+
 
 
 
