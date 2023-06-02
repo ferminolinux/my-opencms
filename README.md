@@ -223,13 +223,14 @@ com as informações de conexão com o banco de dados e aguardar.
 ### Implementação IaC:
 
 #### Vagrant e Scripts Bash
-TODO: Incluir o diagrama dessa arquitetura e descrever o script e o Vagrant
+[Leia o guia aqui](./vagrant/README.md)
 
 #### Vagrant e Ansible
 TODO: Incluir o diagrama e descrever o Ansible e o Vagrant.
 
 #### Docker
-TODO: Incluir a implementação usando Docker e Docker Compose.
+[Leia o guia aqui](./docker/README.md)
+
 
 #### Kubernetes
 TODO: Incluir a implementação usando Kubernetes.

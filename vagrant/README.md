@@ -1,3 +1,26 @@
+# Indice
+- [Descrição](#descrição)
+- [Vagrant](#vagrant)
+    - [Vagrantfile](#vagrantfile)
+        - [Bloco: Vagrant Configure](#bloco-vagrantconfigure)
+        - [Diretiva: .vm.box](#diretiva-vmbox)
+        - [Bloco: vm.define](#bloco-vmdefine)
+        - [Bloco: provider](#bloco-provider)
+        - [Bloco: provision](#bloco-provision)
+- [Scripts Bash](#scripts-bash)
+    - [disable.sh](#disablesh)
+        - [Declaração de Funções](#declaração-de-funções)
+        - [Execução](#execução)
+    - [opencms.sh](#opencmssh)
+        - [Declaração de Funções](#declarac3a7c3a3o-de-func3a7c3b5es-1)
+        - [Execução](#execuc3a7c3a3o-1)
+    - [psql.sh](#psqlsh)
+        - [Declaração de Funções](#declarac3a7c3a3o-de-func3a7c3b5es-2)
+        - [Execução](#execuc3a7c3a3o-2)
+- [Execução do Projeto](#execução-do-projeto)
+
+
+
 ## Descrição
 A abordagem manual tem três problemas principais:
 1. Perdemos tempo com configurações no Virtualbox, com coisas como:
@@ -41,7 +64,7 @@ config.vm.box = "Almalinux/9"
 
 #### Bloco: vm.define
 
-Pode se ter um ou mais **defines**, neles é definido um nome para cada máquina da infraestrutura e suas respectivas configurações. 
+Pode se ter um ou mais **define**, neles é definido um nome para cada máquina da infraestrutura e suas respectivas configurações. 
 
 ``` Ruby
 Vagrant.configure("2") do |config|
@@ -57,7 +80,7 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-#### Bloco: Provider
+#### Bloco: provider
 Diz respeito as configurações que devem ser feitas pelo provedor,
 ou seja, pelo Virtualbox, são configurações relacionadas a alocação de recursos
 como memória e cpu.
@@ -67,7 +90,7 @@ config.vm.provider "virtualbox" do |v|
 end
 ```
 
-#### Bloco: Provision
+#### Bloco: provision
 Diz respeito as configurações que serão feitas pelo provisionador,
 o provisionador é aquele responsável por entregar as configurações ao 
 sistema operacional, o Vagrant suporta várias ferramentas mas neste caso
