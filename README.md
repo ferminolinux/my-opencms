@@ -1,6 +1,22 @@
-# my-opencms
+# Indice
+- [Descrição do projeto](#descrição-do-projeto)
+- [Problema](#problema)
+- [Implementação](#implementação)
+    - [Implementação manual](#implementação-manual)
+        - [Design](#design)
+        - [Virtualbox](#virtualbox)
+        - [Configurações do sistema](#configurações-do-sistema)
+        - [OpenCMS](#opencms)
+        - [Nginx](#nginx)
+        - [Postgres](#postgres)
+        - [Instalação gráfica](#instalação-gráfica)
+    - [Implementação IaC](#implementação-iac)
+        - [Vagrant e Scripts Bash](#vagrant-e-scripts-bash)
+        - [Vagrant e Ansible](#vagrant-e-ansible)
+        - [Docker](#docker)
+        - [Kubernetes](#kubernetes)
 
-## Descrição 
+## Descrição do projeto
 Neste projeto foram realizadas algumas implementações do OpenCMS, foram 
 utilizadas diversas abordagens desde a manual até algumas mais sofisticadas como
 o uso de containers Docker, por exemplo.
@@ -8,18 +24,30 @@ o uso de containers Docker, por exemplo.
 >:bulb: Caso queira saber mais sobre o OpenCMS você pode encontrar mais detalhes
 [aqui](https://documentation.opencms.org/opencms-documentation/introduction/get-started/)
 
-### Problema
+## Problema
 Realizar a implementação do OpenCMS utilizando um banco de dados PostgreSQL
 e tendo o Nginx como proxy reverso.
+Para demonstrar o uso das rotas eu configurei duas, uma para a raiz do OpenCMS
+e outra para a aplicação de demo que vem pronta quando se instala o mesmo.
 
 ## Implementação
 
 ### Implementação manual
-Utilizou-se do [Oracle VM Virtualbox](https://www.virtualbox.org/manual/UserManual.html)
+Utilizei o [Oracle VM Virtualbox](https://www.virtualbox.org/manual/UserManual.html)
 para a criação das máquinas virtuais na infraestrutura local.
 
+A instalação do OpenCMS é composta de duas partes, a primeira é instalação dele 
+no servidor fazendo download e instalação dos arquivos juntamente com a 
+instalação do banco de dados. A segunda parte é feita  graficamente interagindo 
+com o instalador do OpenCMS que fica disponível após a configuração correta dos 
+arquivos no servidor.
+Para este projeto optou-se pelo fuxo em que, será feita toda a instalação do OpenCMS
+incluindo a primeira e o inicio da segunda parte para só depois iniciar a do Nginx, optou-se
+por esse fluxo porque o instalador gráfico do OpenCMS demora para finalizar todas
+as configurações enquanto ele está fazendo isso eu posso ir configurando o Nginx.
+
 #### **Design**
-Foi criada uma rede virtual e duas VM's conectadas a ela, a primeira possuindo a a instalação do OpenCMS e o próprio Nginx e a outra o banco de dados Postgresql.
+Criei rede virtual e duas VM's conectadas a ela, a primeira possuindo a instalação do OpenCMS e o próprio Nginx e a outra o banco de dados Postgresql.
 ![Imagem Arquitetura - Demonstrando as VMs e as tecnologias presentes nelas](imagens/imp-manual-arq.png)
 
 **A rede possui as seguintes características:**
@@ -63,23 +91,21 @@ a rede, a partir daqui é só repetir o mesmo processo para a segunda VM.
 ![Imagem 15 - Janela de interfaces de rede ](imagens/imp-manual-15.png)
 ![Imagem 16 - Adicionando a interface de rede](imagens/imp-manual-16.png)
 
->:bulb: Depois de tudo isso é só realizar a instalação do Almalinux, ela pode ser feita seguindo
+>:bulb: Depois de tudo foi só realizar a instalação do Almalinux, ela foi feita feita seguindo
 o  [guia de instalação do AlmaLinux](https://wiki.almalinux.org/documentation/installation-guide.html#installation) presente na documentação oficial.
 
-#### Linux
-Vamos começar definindo os endereços IP's das VM's, o RHEL/AlmaLinux utiliza
-um padrão de configuração de rede onde o sistema armazena perfis para os dispositivos
-de rede. Os perfis são gerados por uma ferramenta chamada NetworkManager e é
-possível altera-los manualmente editando o arquivo de texto dos perfis que se 
-encontram no diretório **/etc/NetworkManager/system-connections**, é possível
-ver a estrutura de um desses arquivos abaixo:
+#### Configurações do sistema
+Comecei definindo os endereços IP's das VM's dentro dos sistemas, 
+o RHEL/AlmaLinux utiliza um padrão de configuração de rede onde o sistema 
+armazena perfis para os dispositivos de rede. Os perfis são gerados por uma 
+ferramenta chamada NetworkManager e é possível altera-los manualmente editando o
+arquivo de texto dos perfis que se encontram no diretório **/etc/NetworkManager/system-connections**, é possível ver a estrutura de um desses arquivos abaixo:
 
 ![Imagem 17 - Perfil de rede do NetworkManager](imagens/imp-manual-17.png)
 
-Apesar de ser possível alterar via texto, nós vamos seguir a boa prática de 
-utilizar o **nmcli**, ele é um comando do sistema que nos permite realizar essas 
-configurações de rede consequentemente criando ou editando esses arquivos sem 
-precisar mexer neles diretamente.
+Apesar de ser possível alterar via texto, eu optei por seguir a boa prática de 
+utilizar o **nmcli**, ele é um comando do sistema que realiza essas configurações
+de rede gerenciando esses arquivos para o usuário.
 
 Com isso em mente iniciei as configurações:
 
@@ -102,12 +128,117 @@ as modificações a seguir, com os comandos abaixo:
     ![Imagem 20 - Multiplas alterações na conexão de rede](imagens/imp-manual-20.png)
 
 
-4. Para facilitar a identificação das máquinas vamos alterar o hostname dela,
-para isso vamos utilizar também um utilitário do sistema o **hostnamectl**.
-Para isso executei o comando abaixo e reiniciei a sessão do terminal.
+4. Para facilitar a identificação da máquina alterei o hostname dela,
+fiz isso utilizando um utilitário do sistema o **hostnamectl**.
+Executei o comando abaixo e reiniciei a sessão do terminal.
 ![Imagem 21 - Alterando o hostname](imagens/imp-manual-21.png)
 
-5. Repita todos os passos anteriores na VM do psql.
+
+5. Distribuições baseadas no RHEL possuem alguns recursos de segurança bem poderosos mas que não serão úteis para este ambiente de desenvolvimento, como o SELinux e o Firewalld, sendo assim será preciso desabilita-los para que não bloqueiem o funcionamento de nenhuma das nossas ferramentas.
+
+    Para parar o Firewalld faça:
+![Imagem 22 - Desabilita o firewalld ](imagens/imp-manual-23.png)
+
+    Para parar o SELinux será preciso deixar o arquivo **/etc/selinux/config** exatamente como este da imagem.
+![Imagem 23 - Desabilita o selinux](imagens/imp-manual-24.png)
+
+
+6. Repeti todos os passos acima na VM do psql
+
+#### OpenCMS
+Acesse a VM do OpenCMS e siga os comandos abaixo:
+
+1. Instale o Java, tomcat e o unzip
+![Imagem 24 - Instalando pré-requisitos](imagens/imp-manual-24.png)
+
+2. Agora é preciso fazer o download do OpenCMS para isso eu criei um diretório
+temporário para armazena-lo em **/tmp/tomcat**, depois é preciso fazer o download
+dele utilizando o **curl**.
+![Imagem 25 - Download do OpenCMS](imagens/imp-manual-25.png)
+
+3. O OpenCMs é disponibilizado em um arquivo zipado é preciso extraí-lo utilizando 
+o **unzip** que foi instalado anteriormente. 
+Após extrai-lo será obtido um arquivo com a extensão .war, esse é de fato a 
+aplicação do OpenCMS e ele deve ter sua propriedade alterada para pertencer
+ao usuário do Tomcat, isso pode ser feito com o comando **chown** e depois disso
+ele deve ser movido para dentro do diretório de aplicações do Tomcat com o comando **mv**, este diretório no caso do Almalinux é em **/var/lib/tomcat/webapps**.
+![Imagem 26 - Instalação do OpenCMS no Tomcat](imagens/imp-manual-26.png)
+
+5. Vamos reiniciar o serviço do tomcat e habilita-lo na inicialização do sistema.
+![Imagem 27 - Habilita o serviço do Tomcat](imagens/imp-manual-27.png)
+
+
+#### NGINX
+Para as configurações do NGINX, segui os passos a seguir:
+
+1. Instalei o NGINX e Habilitei seu serviço
+![Imagem 28 - Instala o NGINX ](imagens/imp-manual-28.png)
+
+2. Para configurar as rotas eu criei um arquivo chamado **opencms.conf** no diretório **/etc/nginx/conf.d** e o deixei dessa maneira:
+![Imagem 29 - Arquivo de configuração](imagens/imp-manual-29.png)
+
+3. Depois de salvar o arquivo é só reiniciar o serviço do NGINX.
+![Imagem 30 - Reiniciando o NGINX](imagens/imp-manual-30.png)
+
+#### Postgres
+
+Preparei o psql seguindo os passos abaixo:
+
+1. Instalei o pacote dele
+![Imagem 31 - Instalando o psql](imagens/imp-manual-31.png)
+
+2. Inicializei o banco
+![Imagem 32 - Inicializando o psql](imagens/imp-manual-32.png)
+
+3. Habilitei o serviço do postgresql
+![Imagem 33 - Habilitando o psql](imagens/imp-manual-33.png)
+
+4. Entrei como o usuário postgres e acessei o banco de dados
+pelo utilitário psql.
+![Imagem 34 - Acessando o usuário postgres](imagens/imp-manual-34.png)
+![Imagem 35 - Comandos SQL](imagens/imp-manual-35.png)
+
+5. Criei o banco de dados, o usuário dele e dei as permissões necessárias
+![Imagem 36 - Comandos SQL](imagens/imp-manual-36.png)
+
+6. Ainda como o usuário postgres alterei o arquivo de configuração 
+**/var/lib/pgsql/data/postgresql.conf** para permitir que o banco escute conexões
+externas, para isto precisei adicionar esta linha no final do arquivo.
+![Imagem 37 - Comandos SQL](imagens/imp-manual-37.png)
+
+7. Ainda como o usuário postgres alterei o arquivo de configuração 
+**/var/lib/pgsql/data/pg_hba.conf** para permitir que aceite conexões vindas da 
+máquina do OpenCMS, para isto precisei adicionar esta linha ao final do arquivo.
+![Imagem 38 - Comandos SQL](imagens/imp-manual-38.png)
+
+8. Depois de salvar o arquivo podemos deslogar do usuário postgres e reiniciar o
+serviço do banco.
+![Imagem 39 - Comandos SQL](imagens/imp-manual-39.png)
+
+#### Instalação gráfica
+Depois de realizado tudo isso basta acessar o IP da instalação do OpenCMS
+através de um navegador, aceitar seus termos de licença e preencher os campos com as informações de conexão com o banco de dados e aguardar.
+![Imagem 40 - Instalação gráfica 1 SQL](imagens/imp-manual-40.png)
+![Imagem 41 - Instalação gráfica 2 SQL](imagens/imp-manual-41.png)
+![Imagem 42 - Instalação gráfica 3 SQL](imagens/imp-manual-42.png)
+
+### Implementação IaC:
+
+#### Vagrant e Scripts Bash
+TODO: Incluir o diagrama dessa arquitetura e descrever o script e o Vagrant
+
+#### Vagrant e Ansible
+TODO: Incluir o diagrama e descrever o Ansible e o Vagrant.
+
+#### Docker
+TODO: Incluir a implementação usando Docker e Docker Compose.
+
+#### Kubernetes
+TODO: Incluir a implementação usando Kubernetes.
+
+
+
+
 
 
 
