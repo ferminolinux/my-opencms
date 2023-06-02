@@ -4,7 +4,8 @@ config_tomcat() {
     # função: config_tomcat
     # argumentos: 
     # execução:
-    #   Faz as configurações para que o Tomcat consiga executar o OpenCMS
+    #   Faz o download do OpenCMS e as configurações para que o Tomcat consiga 
+    #   executa-lo.
     #
     local tmpdir='/tmp/tomcat'
     local url='http://www.opencms.org/downloads/opencms/opencms-15.0.zip'
