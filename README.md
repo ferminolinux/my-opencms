@@ -36,15 +36,10 @@ e outra para a aplicação de demo que vem pronta quando se instala o mesmo.
 Utilizei o [Oracle VM Virtualbox](https://www.virtualbox.org/manual/UserManual.html)
 para a criação das máquinas virtuais na infraestrutura local.
 
-A instalação do OpenCMS é composta de duas partes, a primeira é instalação dele 
-no servidor fazendo download e instalação dos arquivos juntamente com a 
-instalação do banco de dados. A segunda parte é feita  graficamente interagindo 
-com o instalador do OpenCMS que fica disponível após a configuração correta dos 
-arquivos no servidor.
-Para este projeto optou-se pelo fuxo em que, será feita toda a instalação do OpenCMS
-incluindo a primeira e o inicio da segunda parte para só depois iniciar a do Nginx, optou-se
-por esse fluxo porque o instalador gráfico do OpenCMS demora para finalizar todas
-as configurações enquanto ele está fazendo isso eu posso ir configurando o Nginx.
+A instalação do OpenCMS é composta de duas partes, a primeira é a instalação dele 
+no servidor fazendo download e instalação dos arquivos juntamente com o banco de dados. 
+A segunda parte é feita  graficamente interagindo  com o instalador do OpenCMS 
+que fica disponível após a configuração correta dos arquivos no servidor.
 
 #### **Design**
 Criei rede virtual e duas VM's conectadas a ela, a primeira possuindo a instalação do OpenCMS e o próprio Nginx e a outra o banco de dados Postgresql.
@@ -72,7 +67,7 @@ seguindo os passos a seguir:
 ![Imagem 4 - Definições de rede](imagens/imp-manual-4.png)
 3. Criei a nova rede
 ![Imagem 5 - Criando uma nova rede](imagens/imp-manual-5.png)
-4. Alterei o o bloco CIDR padrão dela para o que eu desejava:
+4. Alterei o o ip padrão dela para o que eu desejava:
 ![Imagem 6 - Selecionando a rede](imagens/imp-manual-6.png)
 ![Imagem 7 - Alterando o bloco cidr da rede](imagens/imp-manual-7.png)
 
@@ -134,7 +129,10 @@ Executei o comando abaixo e reiniciei a sessão do terminal.
 ![Imagem 21 - Alterando o hostname](imagens/imp-manual-21.png)
 
 
-5. Distribuições baseadas no RHEL possuem alguns recursos de segurança bem poderosos mas que não serão úteis para este ambiente de desenvolvimento, como o SELinux e o Firewalld, sendo assim será preciso desabilita-los para que não bloqueiem o funcionamento de nenhuma das nossas ferramentas.
+5. Distribuições baseadas no RHEL possuem alguns recursos de segurança bem 
+interessantes mas que não serão úteis para este ambiente de desenvolvimento, 
+como o SELinux e o Firewalld, sendo assim será preciso desabilita-los para que 
+não bloqueiem o funcionamento de nenhuma das nossas ferramentas.
 
     Para parar o Firewalld faça:
 ![Imagem 22 - Desabilita o firewalld ](imagens/imp-manual-23.png)
@@ -193,7 +191,7 @@ Preparei o psql seguindo os passos abaixo:
 3. Habilitei o serviço do postgresql
 ![Imagem 33 - Habilitando o psql](imagens/imp-manual-33.png)
 
-4. Entrei como o usuário postgres e acessei o banco de dados
+4. Entrei com o usuário postgres e acessei o banco de dados
 pelo utilitário psql.
 ![Imagem 34 - Acessando o usuário postgres](imagens/imp-manual-34.png)
 ![Imagem 35 - Comandos SQL](imagens/imp-manual-35.png)
@@ -217,7 +215,8 @@ serviço do banco.
 
 #### Instalação gráfica
 Depois de realizado tudo isso basta acessar o IP da instalação do OpenCMS
-através de um navegador, aceitar seus termos de licença e preencher os campos com as informações de conexão com o banco de dados e aguardar.
+através de um navegador, aceitar seus termos de licença e preencher os campos 
+com as informações de conexão com o banco de dados e aguardar.
 ![Imagem 40 - Instalação gráfica 1 SQL](imagens/imp-manual-40.png)
 ![Imagem 41 - Instalação gráfica 2 SQL](imagens/imp-manual-41.png)
 ![Imagem 42 - Instalação gráfica 3 SQL](imagens/imp-manual-42.png)
