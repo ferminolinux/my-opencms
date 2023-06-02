@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+
+########### DECLARAÇÃO DE FUNÇÕES
 config_tomcat() {
     # função: config_tomcat
     # argumentos: 
@@ -17,6 +19,7 @@ config_tomcat() {
     sudo chown tomcat:tomcat $tmpdir/opencms.war
     sudo mv $tmpdir/opencms.war /var/lib/tomcat/webapps/opencms.war
 
+    sudo systemctl enable --now tomcat
     sudo systemctl restart tomcat 
 }
 
@@ -26,33 +29,34 @@ config_nginx() {
     # execução:
     #   Faz as configurações para que o Nginx atue como Proxy Reverso
     #
-    sudo setenforce 0
 
 sudo cat <<EOF > /etc/nginx/conf.d/opencms.conf
 server {
     listen 80;
 
     location / {
-        proxy_pass http://172.23.1.10:8080/opencms/ ;
+        proxy_pass http://192.168.100.10:8080/ ;
     }
 
-    location /demo {
-        proxy_pass http://172.23.1.10:8080/opencms/mercury-demo/home/ ; 
-    }
-
-    server_name 172.23.1.10;
+    server_name opencms.net;
 }
 EOF
 
+sudo systemctl enable --now nginx
 sudo systemctl restart nginx
 }
 
+########### FIM DA DECLARAÇÃO DE FUNÇÕES
 
 
+
+
+########### EXECUÇÃO
 pkgs=(
     java-11-openjdk
     java-11-openjdk-devel
     java-11-openjdk-javadoc
+    unzip
     tomcat
     nginx
 )

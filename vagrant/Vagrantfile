@@ -4,30 +4,31 @@
 Vagrant.configure("2") do |config|
   config.vm.box = "almalinux/9"
   
-  # Define as informações do servidor web
-  config.vm.define "webserver" do |web|
-    web.vm.hostname = "webserver"
-    web.vm.network "private_network", ip: "172.23.1.10"
+  # Define as informações do servidor opencms
+  config.vm.define "opencms" do |opencms|
+    opencms.vm.hostname = "opencms.net"
+    opencms.vm.network "private_network", ip: "192.168.100.10"
     
-    web.vm.provider "virtualbox" do |v|
+    opencms.vm.provider "virtualbox" do |v|
       v.memory = 2048
       v.cpus = 1
     end
 
-    web.vm.provision "shell", path: "./webserver.sh"
+    opencms.vm.provision "shell", path: "./opencms.sh"
   end
 
-  # Define as informações do servidor de banco de dados
-  config.vm.define "database" do |db|
-    db.vm.hostname = "database"
-    db.vm.network "private_network", ip: "172.23.1.20"
+  # Define as informações do servidor de psql
+  config.vm.define "psql" do |psql|
+    psql.vm.network "private_network", ip: "192.168.100.20"
 
-    db.vm.provider "virtualbox" do |v|
+    psql.vm.provider "virtualbox" do |v|
       v.memory = 512
       v.cpus = 1
     end
 
-    db.vm.provision "shell", path: "./database.sh"
+    psql.vm.provision "shell", path: "./psql.sh"
   end
+
+  config.vm.provision "shell", path: "./disable.sh"
 
 end
