@@ -1,0 +1,32 @@
+version: '3.9'
+services:
+  opencms: 
+    image: alkacon/opencms-docker
+    volumes:
+      - opencms:/usr/local/tomcat/demo
+    networks:
+      - opencms
+  nginx:
+    image: nginx
+    ports:
+      - 80:80
+    volumes:
+      - ./conf.d:/etc/nginx/conf.d
+    networks:
+      - opencms
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_USER: opencms_user
+      POSTGRES_DB: opencms_db
+      POSTGRES_PASSWORD: opencms1234
+      POSTGRES_HOST_AUTH_METHOD: md5
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - opencms
+networks:
+  opencms:
+volumes:
+  opencms:
+  pgdata:
