@@ -11,7 +11,7 @@
         - [Postgres](#postgres)
         - [Instalação gráfica](#instalação-gráfica)
     - [Implementação IaC](#implementação-iac)
-        - [Vagrant e Scripts Bash](#vagrant-e-scripts-bash)
+        - [Vagrant e Scripts Bash](vagrant/README.md)
         - [Vagrant e Ansible](#vagrant-e-ansible)
         - [Docker](#docker)
         - [Kubernetes](#kubernetes)
@@ -123,22 +123,17 @@ as modificações a seguir, com os comandos abaixo:
     ![Imagem 20 - Multiplas alterações na conexão de rede](imagens/imp-manual-20.png)
 
 
-4. Para facilitar a identificação da máquina alterei o hostname dela,
-fiz isso utilizando um utilitário do sistema o **hostnamectl**.
-Executei o comando abaixo e reiniciei a sessão do terminal.
-![Imagem 21 - Alterando o hostname](imagens/imp-manual-21.png)
-
-
-5. Distribuições baseadas no RHEL possuem alguns recursos de segurança bem 
+4. Distribuições baseadas no RHEL possuem alguns recursos de segurança bem 
 interessantes mas que não serão úteis para este ambiente de desenvolvimento, 
 como o SELinux e o Firewalld, sendo assim será preciso desabilita-los para que 
 não bloqueiem o funcionamento de nenhuma das nossas ferramentas.
 
     Para parar o Firewalld faça:
-![Imagem 22 - Desabilita o firewalld ](imagens/imp-manual-23.png)
+![Imagem 21 - Desabilita o firewalld ](imagens/imp-manual-21.png)
 
-    Para parar o SELinux será preciso deixar o arquivo **/etc/selinux/config** exatamente como este da imagem.
-![Imagem 23 - Desabilita o selinux](imagens/imp-manual-24.png)
+    Para parar o SELinux será preciso deixar o arquivo **/etc/selinux/config** exatamente como este da imagem e
+    não esqueça de reiniciar a máquina depois de desativa-lo.
+![Imagem 22 - Desabilita o selinux](imagens/imp-manual-22.png)
 
 
 6. Repeti todos os passos acima na VM do psql
@@ -147,12 +142,12 @@ não bloqueiem o funcionamento de nenhuma das nossas ferramentas.
 Acesse a VM do OpenCMS e siga os comandos abaixo:
 
 1. Instale o Java, tomcat e o unzip
-![Imagem 24 - Instalando pré-requisitos](imagens/imp-manual-24.png)
+![Imagem 23 - Instalando pré-requisitos](imagens/imp-manual-23.png)
 
 2. Agora é preciso fazer o download do OpenCMS para isso eu criei um diretório
 temporário para armazena-lo em **/tmp/tomcat**, depois é preciso fazer o download
 dele utilizando o **curl**.
-![Imagem 25 - Download do OpenCMS](imagens/imp-manual-25.png)
+![Imagem 24 - Download do OpenCMS](imagens/imp-manual-24.png)
 
 3. O OpenCMs é disponibilizado em um arquivo zipado é preciso extraí-lo utilizando 
 o **unzip** que foi instalado anteriormente. 
@@ -160,22 +155,26 @@ Após extrai-lo será obtido um arquivo com a extensão .war, esse é de fato a
 aplicação do OpenCMS e ele deve ter sua propriedade alterada para pertencer
 ao usuário do Tomcat, isso pode ser feito com o comando **chown** e depois disso
 ele deve ser movido para dentro do diretório de aplicações do Tomcat com o comando **mv**, este diretório no caso do Almalinux é em **/var/lib/tomcat/webapps**.
-![Imagem 26 - Instalação do OpenCMS no Tomcat](imagens/imp-manual-26.png)
+![Imagem 25 - Instalação do OpenCMS no Tomcat](imagens/imp-manual-25.png)
 
 5. Vamos reiniciar o serviço do tomcat e habilita-lo na inicialização do sistema.
-![Imagem 27 - Habilita o serviço do Tomcat](imagens/imp-manual-27.png)
+![Imagem 26 - Habilita o serviço do Tomcat](imagens/imp-manual-26.png)
 
 
 #### NGINX
 Para as configurações do NGINX, segui os passos a seguir:
 
 1. Instalei o NGINX e Habilitei seu serviço
-![Imagem 28 - Instala o NGINX ](imagens/imp-manual-28.png)
+![Imagem 27 - Instala o NGINX ](imagens/imp-manual-27.png)
 
 2. Para configurar as rotas eu criei um arquivo chamado **opencms.conf** no diretório **/etc/nginx/conf.d** e o deixei dessa maneira:
-![Imagem 29 - Arquivo de configuração](imagens/imp-manual-29.png)
+![Imagem 28 - Arquivo de configuração](imagens/imp-manual-28.png)
 
-3. Depois de salvar o arquivo é só reiniciar o serviço do NGINX.
+3. Alterei o hostname para opencms.net para bater com o servername definido na 
+rota do nginx.
+![Imagem 29 - Configurando hosts](imagens/imp-manual-29.png)
+
+4. Depois de salvar o arquivo é só reiniciar o serviço do NGINX.
 ![Imagem 30 - Reiniciando o NGINX](imagens/imp-manual-30.png)
 
 #### Postgres

@@ -2,6 +2,7 @@
 
 pg_data='/var/lib/pgsql/data'
 
+########### DECLARAÇÃO DE FUNÇÕES
 install() {
     # função: install 
     # argumentos: 
@@ -36,12 +37,16 @@ run_sql() {
     #   Executa um comando SQL no banco utilizando o usuário padrão administrador do postgres
     sudo su -c "psql -c \"$1\"" - postgres
 }
+########### FIM DA DECLARAÇÃO DE FUNÇÕES
 
 
+
+
+########### EXECUÇÃO
 install
-config 'all' 'all' '172.23.1.10/32'
+config 'all' 'all' '192.168.100.10/32'
 
 ## Cria os recursos do banco de dados
-run_sql "CREATE DATABASE opencms_db;"
-run_sql "CREATE USER opencms_user WITH PASSWORD 'Ntpc@15953';"
-run_sql "GRANT ALL PRIVILEGES ON DATABASE opencms_db TO opencms_user;"
+run_sql "CREATE DATABASE opencms;"
+run_sql "CREATE USER opencms_user WITH PASSWORD '123010203';"
+run_sql "GRANT ALL PRIVILEGES ON DATABASE opencms TO opencms_user;"
