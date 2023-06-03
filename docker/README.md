@@ -1,15 +1,7 @@
 ## Descrição
-As duas abordagens anteriores a manual e com o Vagrant utilizam VM's
-que demandam um maior uso de recursos e mais configurações por se tratarem da 
-virtualização de todos os aspectos de uma máquina, nesta abordagem vamos utilizar 
-Containers do Docker, que são uma camada de abstração que nos permite abstrair 
-apenas o sistema operacional escolhido deixando os demais aspectos para que a 
-Engine responsável por prover os containers se preocupe com isso.
+Implementação com Docker
 
 ## Imagens
-O Docker possui um repositório de imagens chamado Docker Hub que possui
-várias imagens de sistemas ou de sistemas com aplicações especificas disponíveis
-para download.
 Para esta implementação utilizamos as imagens oficiais a seguir:
 
 - [alkacon/opencms-docker](alkacon/opencms-docker)
@@ -75,13 +67,7 @@ docker run \
 ```
 
 ## Compose
-A maioria das instalações do Docker em ambientes de desenvolvimento conta com
-o compose, que é uma ferramenta para executar aplicações multi-serviço executando
-docker, eu utilizei esta ferramenta para refazer a mesma implementação que tinha
-feito pela linha de comando só que agora tudo de maneira mais automatizada e sem
-a necessidade de enviar comandos, é só descrever o nosso projeto em um arquivo
-do tipo yaml.
-
+Também fiz uma implementação usando o Docker Compose para automatizar o processo.
 >:bulb: O código pode ser lido [aqui](./compose.yaml)
 
 

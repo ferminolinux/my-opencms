@@ -10,25 +10,17 @@
         - [Nginx](#nginx)
         - [Postgres](#postgres)
         - [Instalação gráfica](#instalação-gráfica)
-    - [Implementação IaC](#implementação-iac)
-        - [Vagrant e Scripts Bash](vagrant/README.md)
-        - [Vagrant e Ansible](#vagrant-e-ansible)
-        - [Docker](#docker)
-        - [Kubernetes](#kubernetes)
+    - Implementações Automatizadas
+        - [Vagrant + Scripts](vagrant/README.md)
+        - [Docker](docker/README.md)
 
 ## Descrição do projeto
-Neste projeto foram realizadas algumas implementações do OpenCMS, foram 
-utilizadas diversas abordagens desde a manual até algumas mais sofisticadas como
-o uso de containers Docker, por exemplo.
+Neste projeto foram realizadas algumas implementações do OpenCMS.
 
->:bulb: Caso queira saber mais sobre o OpenCMS você pode encontrar mais detalhes
-[aqui](https://documentation.opencms.org/opencms-documentation/introduction/get-started/)
 
 ## Problema
 Realizar a implementação do OpenCMS utilizando um banco de dados PostgreSQL
 e tendo o Nginx como proxy reverso.
-Para demonstrar o uso das rotas eu configurei duas, uma para a raiz do OpenCMS
-e outra para a aplicação de demo que vem pronta quando se instala o mesmo.
 
 ## Implementação
 
@@ -108,7 +100,6 @@ Com isso em mente iniciei as configurações:
 ao virtualbox.
 ![Imagem 18 - Listagem conexões de rede](imagens/imp-manual-18.png)
 
-
 2. Depois de identificar a Wired Connection, alterei o nome dela para **enp0s8**.
 ![Imagem 19 - Alterando nome da conexão](imagens/imp-manual-19.png)
 
@@ -123,10 +114,10 @@ as modificações a seguir, com os comandos abaixo:
     ![Imagem 20 - Multiplas alterações na conexão de rede](imagens/imp-manual-20.png)
 
 
-4. Distribuições baseadas no RHEL possuem alguns recursos de segurança bem 
-interessantes mas que não serão úteis para este ambiente de desenvolvimento, 
-como o SELinux e o Firewalld, sendo assim será preciso desabilita-los para que 
-não bloqueiem o funcionamento de nenhuma das nossas ferramentas.
+4. Distribuições baseadas no RHEL possuem alguns recursos de segurança que não 
+serão úteis para este ambiente de desenvolvimento, como o SELinux e o Firewalld, 
+sendo assim será preciso desabilita-los para que  não bloqueiem o funcionamento 
+de nenhuma das nossas ferramentas.
 
     Para parar o Firewalld faça:
 ![Imagem 21 - Desabilita o firewalld ](imagens/imp-manual-21.png)
@@ -215,27 +206,10 @@ serviço do banco.
 #### Instalação gráfica
 Depois de realizado tudo isso basta acessar o IP da instalação do OpenCMS
 através de um navegador, aceitar seus termos de licença e preencher os campos 
-com as informações de conexão com o banco de dados e aguardar.
+com as informações de conexão com o banco de dados e aguardar a instalação finalizar.
 ![Imagem 40 - Instalação gráfica 1 SQL](imagens/imp-manual-40.png)
 ![Imagem 41 - Instalação gráfica 2 SQL](imagens/imp-manual-41.png)
 ![Imagem 42 - Instalação gráfica 3 SQL](imagens/imp-manual-42.png)
-
-### Implementação IaC:
-
-#### Vagrant e Scripts Bash
-[Leia o guia aqui](./vagrant/README.md)
-
-#### Vagrant e Ansible
-TODO: Incluir o diagrama e descrever o Ansible e o Vagrant.
-
-#### Docker
-[Leia o guia aqui](./docker/README.md)
-
-
-#### Kubernetes
-TODO: Incluir a implementação usando Kubernetes.
-
-
 
 
 
