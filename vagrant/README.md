@@ -1,6 +1,6 @@
 ## Descrição
-Fiz uma implementação automatizada utilizandos VMs, optei por utilizar o Vagrant
-porque ele é capaz de automatizar o processo de criação das VMs no Virtualbox
+Fiz uma implementação automatizada das VMs, optei por utilizar o Vagrant
+porque ele é capaz de automatizar o processo de criação delas no Virtualbox
 e também escrevi scripts bash para automatizar a entrega das configurações do sistema.
 
 ![Arquitetura Vagrant](../imagens/imp-vagrant-arq.png)
@@ -21,12 +21,20 @@ Foram desenvolvidos três scripts bash, são eles:
 - **disable.sh**: Responsável por desabilitar o Firewalld e o SELinux para que não
 bloqueiem as conexões das aplicações, clique [aqui](./disable.sh) para vê-lo.
 - **opencms.sh**: Responsável por fazer a instalação do Tomcat, o download
-e configuração do OpenCMS além de preparar o NGINX como proxy reverso, 
+e configuração do OpenCMS além de preparar o nginx como proxy reverso, 
 clique [aqui](./opencms.sh) para vê-lo.
 - **psql.sh**: Responsável por fazer a instalação do postgresql, a inicialização
 dos seus arquivos de configuração e ainda faz todo o processo para que ele
 possa escutar as comunicações vindas da máquina do OpenCMS, clique [aqui](././psql.sh) 
 para vê-lo.
+
+## Execução
+Para executar este projeto com o vagrant instalado, basta rodar o comando a seguir:
+
+```bash
+# O reload é importante para reiniciar os ambientes após desativar o SELinux
+vagrant up && vagrant reload
+```
 
 
 
