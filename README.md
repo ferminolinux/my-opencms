@@ -10,9 +10,11 @@
         - [Nginx](#nginx)
         - [Postgres](#postgres)
         - [Instalação gráfica](#instalação-gráfica)
+        - [Testando o OpenCMS](#testando-o-opencms)
     - Implementações Automatizadas
         - [Vagrant + Scripts](vagrant/README.md)
         - [Docker](docker/README.md)
+
 
 ## Descrição do projeto
 Neste projeto foram realizadas algumas implementações do OpenCMS.
