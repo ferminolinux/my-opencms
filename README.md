@@ -35,6 +35,7 @@ que fica disponível após a configuração correta dos arquivos no servidor.
 
 #### **Design**
 Criei a rede virtual e duas VM's conectadas a ela, a primeira possuindo a instalação do OpenCMS e o próprio Nginx e a outra o banco de dados Postgresql.
+
 ![Imagem Arquitetura - Demonstrando as VMs e as tecnologias presentes nelas](imagens/imp-manual-arq.png)
 
 **A rede possui as seguintes características:**
