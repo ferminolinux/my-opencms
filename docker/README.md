@@ -51,7 +51,7 @@ docker run \
 ```
 ### Postgres
 Criei um container do PostgreSQL definindo as informações de usuário, banco de dados e senha através das variáveis de ambiente, não é necessário vincular uma porta dele ao
-docker host, porque há razão acessar esse recurso pelo docker host.
+docker host, porque há razão acessar esse recurso pelo localhost.
 
 ```bash
 docker run \
