@@ -34,7 +34,7 @@ A segunda parte é feita  graficamente interagindo  com o instalador do OpenCMS
 que fica disponível após a configuração correta dos arquivos no servidor.
 
 #### **Design**
-Criei a rede virtual e duas VM's conectadas a ela, a primeira possuindo a instalação do OpenCMS e o próprio Nginx e a outra o banco de dados Postgresql.
+Criei a rede virtual e duas VM's conectadas a ela, a primeira possuindo a instalação do OpenCMS e o próprio NGINX e a outra o banco de dados Postgresql.
 
 ![Imagem Arquitetura - Demonstrando as VMs e as tecnologias presentes nelas](imagens/imp-manual-arq.png)
 
@@ -108,7 +108,7 @@ ao virtualbox.
 as modificações a seguir, com os comandos abaixo:
 
     - Alterei o método de endereçamento para manual
-    - Adicionei o endereço IP correspodente
+    - Adicionei o endereço IP correspondente
     - Adicionei o gateway(que é o endereço do virtualbox dentro da rede).
     - Adicionei um endereço de servidor dns para resolução de nomes na internet.
     - Reiniciei a interface, desligando ela e ligando novamente(down e up).
@@ -116,15 +116,15 @@ as modificações a seguir, com os comandos abaixo:
 
 
 4. Distribuições baseadas no RHEL possuem alguns recursos de segurança que não 
-serão úteis para este ambiente de desenvolvimento, como o SELinux e o Firewalld, 
-sendo assim será preciso desabilita-los para que  não bloqueiem o funcionamento 
-de nenhuma das nossas ferramentas.
+seriam úteis para este ambiente de desenvolvimento, como o SELinux e o Firewalld, 
+sendo assim foi preciso desabilita-los para que  não bloqueassem o funcionamento 
+de nenhuma ferramenta.
 
     Para parar o Firewalld faça:
 ![Imagem 21 - Desabilita o firewalld ](imagens/imp-manual-21.png)
 
-    Para parar o SELinux será preciso deixar o arquivo **/etc/selinux/config** exatamente como este da imagem e
-    não esqueça de reiniciar a máquina depois de desativa-lo.
+    Para parar o SELinux foi preciso deixar o arquivo **/etc/selinux/config** exatamente como este da imagem e
+    reiniciar a máquina depois de desativa-lo.
 ![Imagem 22 - Desabilita o selinux](imagens/imp-manual-22.png)
 
 
@@ -137,7 +137,7 @@ Acesse a VM do OpenCMS e siga os comandos abaixo:
 ![Imagem 23 - Instalando pré-requisitos](imagens/imp-manual-23.png)
 
 2. Agora é preciso fazer o download do OpenCMS para isso eu criei um diretório
-temporário para armazena-lo em **/tmp/tomcat**, depois é preciso fazer o download
+temporário para armazena-lo em **/tmp/tomcat**, depois foi preciso fazer o download
 dele utilizando o **curl**.
 ![Imagem 24 - Download do OpenCMS](imagens/imp-manual-24.png)
 
@@ -149,14 +149,14 @@ ao usuário do Tomcat, isso pode ser feito com o comando **chown** e depois diss
 ele deve ser movido para dentro do diretório de aplicações do Tomcat com o comando **mv**, este diretório no caso do Almalinux é em **/var/lib/tomcat/webapps**.
 ![Imagem 25 - Instalação do OpenCMS no Tomcat](imagens/imp-manual-25.png)
 
-5. Vamos reiniciar o serviço do tomcat e habilita-lo na inicialização do sistema.
+5. Basta reiniciar o serviço do tomcat e habilita-lo na inicialização do sistema.
 ![Imagem 26 - Habilita o serviço do Tomcat](imagens/imp-manual-26.png)
 
 
 #### NGINX
 Para as configurações do NGINX, segui os passos a seguir:
 
-1. Instalei o NGINX e Habilitei seu serviço
+1. Instalei o NGINX e habilitei seu serviço
 ![Imagem 27 - Instala o NGINX ](imagens/imp-manual-27.png)
 
 2. Para configurar as rotas eu criei um arquivo chamado **opencms.conf** no diretório **/etc/nginx/conf.d** e o deixei dessa maneira:
