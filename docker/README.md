@@ -37,8 +37,8 @@ docker run \
 
 ### NGINX
 Criei um container do NGINX adicionando a minha pasta de configuração a ele.
-Aqui foi preciso vincular uma porta do docker host ao container para
-acessar o conteúdo dele através do nosso docker host.
+Aqui foi preciso vincular uma porta do docker host porque eu desejo acessa-lo
+para ter acesso ao OpenCMs através dele.
 
 ```bash
 docker run \
