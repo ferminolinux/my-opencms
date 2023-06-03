@@ -212,6 +212,10 @@ com as informações de conexão com o banco de dados e aguardar a instalação 
 ![Imagem 41 - Instalação gráfica 2 SQL](imagens/imp-manual-41.png)
 ![Imagem 42 - Instalação gráfica 3 SQL](imagens/imp-manual-42.png)
 
+#### Testando o OpenCMS
+![Imagem 43 - Teste 1](imagens/teste-1.png)
+![Imagem 44 - Teste 2](imagens/teste-2.png)
+![Imagem 45 - Teste 3](imagens/teste-3.png)
 
 
 
