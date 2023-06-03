@@ -15,7 +15,8 @@ comando por comando.
 
 ### Configurações gerais
 
-Vamos começar criando a rede e os volumes necessários
+Vamos começar criando a rede e os volumes necessários, é importante que os containers estejam na mesma rede
+pois assim será possível estabelecer conexão entre eles utilizando o nome deles diretamente.
 ```bash
 docker network create opencms 
 docker volume create pgdata 
